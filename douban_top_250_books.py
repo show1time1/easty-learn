@@ -4,11 +4,10 @@ import xlwt
 
 
 def request_douban(url):
-headers = {
+    headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/88.0.4324.146 Safari/537.36',
     }
-
     try:
         response = requests.get(url=url, headers=headers)
         if response.status_code == 200:
@@ -36,7 +35,7 @@ def save_to_excel(soup):
     for item in list:
         item_name = item.find(class_='title').string
         item_img = item.find('a').find('img').get('src')
-        item_index = item.find(class_='').string
+        item_index = item.find('em').string
         item_score = item.find(class_='rating_num').string
         item_author = item.find('p').text
         if item.find(class_='inq') is not None:
@@ -67,8 +66,8 @@ def main(page):
 
 
 if __name__ == '__main__':
-
     for i in range(0, 10):
         main(i)
-
 book.save(u'豆瓣最受欢迎的250部电影.xlsx')
+
+
